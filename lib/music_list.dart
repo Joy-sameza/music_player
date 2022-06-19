@@ -11,8 +11,10 @@ class MusicList extends StatefulWidget {
 class _MusicListState extends State<MusicList> {
   @override
   Widget build(BuildContext context) {
+    const mainColor = Colors.grey;
+    const backColor = Colors.white;
     return Scaffold(
-      backgroundColor: Colors.grey,
+      backgroundColor: mainColor,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(100),
         child: AppBar(
@@ -28,13 +30,15 @@ class _MusicListState extends State<MusicList> {
               IconButton(
                 onPressed: () {},
                 icon: const Icon(Icons.shuffle_outlined),
+                tooltip: 'Shuffle',
               ),
               const SizedBox(width: 6.0),
               Padding(
                 padding: const EdgeInsets.only(right: 10.0),
                 child: IconButton(
                   onPressed: () {},
-                  icon: const Icon(Icons.repeat_on_outlined),
+                  icon: const Icon(Icons.repeat_on),
+                  tooltip: 'Repeat',
                 ),
               )
             ]),
@@ -42,46 +46,93 @@ class _MusicListState extends State<MusicList> {
       body: Container(
         padding: const EdgeInsets.only(top: 15.0),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20.0), color: Colors.white),
-        child: ListView.builder(
-            itemCount: 20,
-            itemBuilder: (BuildContext context, int index) {
-              String _songTitle;
-              String _songAuthor;
-              return Container(
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  border: Border(
-                    bottom: BorderSide(color: Colors.grey, width: 2.0),
-                  ),
-                ),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(primary: Colors.white),
-                  onPressed: () {},
-                  child: ListTile(
-                    onTap: (() {
-                      _songAuthor = "Author ${index + 1}";
-                      _songTitle = "Music ${index + 1}";
-                      AboutSong(_songTitle, _songAuthor);
-                    }),
-                    leading: const CircleAvatar(
-                      backgroundColor: Colors.grey,
+            borderRadius: BorderRadius.circular(20.0), color: backColor),
+        child: Stack(
+          children: 
+                [ListView.builder(
+                itemCount: 20,
+                itemBuilder: (BuildContext context, int index) {
+                  String songTitle;
+                  String songAuthor;
+                  return Container(
+                    decoration: const BoxDecoration(
+                      color: backColor,
+                      border: Border(
+                        bottom: BorderSide(color: mainColor, width: 2.0),
+                      ),
                     ),
-                    title: Text(
-                      "Music ${index + 1}",
-                      style: const TextStyle(
-                          fontSize: 20.0, fontWeight: FontWeight.bold),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(primary: backColor),
+                      onPressed: () {
+                        songAuthor = "Author ${index + 1}";
+                        songTitle = "Music ${index + 1}";
+        
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => PlayScreen(
+                              title: songTitle,
+                              author: songAuthor,
+                            )),
+                        );
+                      },
+                      child: ListTile(
+                        leading: const CircleAvatar(
+                          backgroundColor: mainColor,
+                        ),
+                        title: Text(
+                          "Music ${index + 1}",
+                          style: const TextStyle(
+                              fontSize: 20.0, fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Text(
+                          "Author ${index + 1}",
+                          style: const TextStyle(fontSize: 14.0, color: mainColor),
+                          textDirection: TextDirection.ltr,
+                        ),
+                      ),
                     ),
-                    subtitle: Text(
-                      "Author ${index + 1}",
-                      style:
-                          const TextStyle(fontSize: 14.0, color: Colors.grey),
+                  );
+                }),
+
+                Stack(children: [
+                  ElevatedButton(
+                    onPressed: () {}, 
+                    style: ElevatedButton.styleFrom(
+                      elevation: 10.0,
+                      primary: mainColor,
                     ),
-                  ),
-                ),
-              );
-            }),
+                    child: Row(
+                      children: const [
+                        Text('Hey!!')
+                      ],
+                    ),)
+                ],),
+              ],
+        ),
       ),
     );
   }
+}
+
+class Transition extends PageRouteBuilder {
+  final Widget page;
+  Transition(this.page)
+      : super(
+            pageBuilder: (context, animation, otherAnimation) => page,
+            transitionDuration: const Duration(seconds: 1),
+            reverseTransitionDuration: const Duration(milliseconds: 200),
+            transitionsBuilder: (context, animation, otherAnimation, child) {
+              animation = CurvedAnimation(
+                  parent: animation,
+                  curve: Curves.fastLinearToSlowEaseIn,
+                  reverseCurve: Curves.fastOutSlowIn);
+              return Align(
+                alignment: Alignment.bottomCenter,
+                child: SizeTransition(
+                  sizeFactor: animation,
+                  axisAlignment: 0,
+                  child: page,
+                ),
+              );
+            });
 }

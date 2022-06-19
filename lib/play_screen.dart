@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:music_player/music_list.dart';
 
 class PlayScreen extends StatefulWidget {
-  const PlayScreen({Key? key}) : super(key: key);
+  const PlayScreen({Key? key, required this.title, required this.author}) : super(key: key);
+  final String title;
+  final String author;
 
   @override
   State<PlayScreen> createState() => _PlayScreenState();
@@ -9,13 +12,23 @@ class PlayScreen extends StatefulWidget {
 
 class _PlayScreenState extends State<PlayScreen> {
   double _currentValue = 0;
+
   @override
   Widget build(BuildContext context) {
-    // var newValue;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        leading: const Icon(Icons.expand_more),
+        title: const Text('GDSC Music Player'),
+        centerTitle: true,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const MusicList())
+            );
+          }, 
+          icon: const Icon(Icons.expand_more_outlined)),
         actions: const [
           Padding(
             padding: EdgeInsets.only(right: 10.0),
@@ -33,36 +46,59 @@ class _PlayScreenState extends State<PlayScreen> {
                 height: 200.0,
                 width: 200.0,
                 decoration: const BoxDecoration(
-                    color: Color.fromARGB(100, 158, 158, 158),
-                    borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                  color: Color.fromARGB(100, 158, 158, 158),
+                  borderRadius: BorderRadius.all(Radius.circular(10.0))),
               ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 40.0),
             child: Column(
-              children: const [
-                Text("Song Title Here",
-                    style: TextStyle(
-                      fontSize: 20.0,
+                children: [
+                  Text(widget.title,
+                    style: const TextStyle(
+                      fontSize: 24.0,
                       fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 0, 0, 0),
-                    )),
-                Text('Music Author',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold, 
-                    fontSize: 16)),
-              ],
-            ),
+                      color: Colors.black,
+                      )),
+                  Text(widget.author,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold, 
+                      fontSize: 16,
+                      color: Color.fromARGB(170, 160, 160, 160))),
+                ],
+                ),
           ),
-          
-          Slider.adaptive(
-              value: _currentValue,
-              onChanged: (newValue) {
-                setState(() {
-                  _currentValue = newValue;
-                });
-              }),
+              const Text("00:00"),
+              
+              Slider.adaptive(
+                  value: _currentValue,
+                  onChanged: (newValue) {
+                    setState(() {
+                      _currentValue = newValue;
+                    });
+                  }),
+              const Text("00:00"),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                onPressed: () {},
+                iconSize: 50.0,
+                icon: const Icon(Icons.skip_previous),
+              ),
+              IconButton(
+                onPressed: () {},
+                iconSize: 50.0,
+                icon: const Icon(Icons.play_arrow),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.skip_next),
+                iconSize: 50.0,
+              ),
+            ],
+          ),
         ],
       ),
     );
@@ -71,5 +107,4 @@ class _PlayScreenState extends State<PlayScreen> {
 
 class AboutSong {
   AboutSong(String songTitle, String songAuthor);
-
 }
