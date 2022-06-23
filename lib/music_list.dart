@@ -13,6 +13,8 @@ class _MusicListState extends State<MusicList> {
   Widget build(BuildContext context) {
     const mainColor = Colors.grey;
     const backColor = Colors.white;
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: mainColor,
       appBar: PreferredSize(
@@ -94,18 +96,34 @@ class _MusicListState extends State<MusicList> {
                   );
                 }),
 
-                Stack(children: [
-                  ElevatedButton(
-                    onPressed: () {}, 
-                    style: ElevatedButton.styleFrom(
-                      elevation: 10.0,
-                      primary: mainColor,
+                Stack(
+                  alignment: AlignmentDirectional.centerStart,
+                  children: [
+                  Padding(
+                    padding: EdgeInsets.only(bottom: (height * 0.08)),
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          elevation: 10.0,
+                          primary: mainColor,
+                          minimumSize: Size((width * 0.8), 80),
+                          maximumSize: Size((width * 0.8), 100),
+                          shape: const StadiumBorder()
+                        ),
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            color: Colors.deepOrange
+                          ),
+                          child: Row(
+                            children: [
+                              Text('Hight: $height\nWidth: $width')
+                            ],
+                          ),
+                        ),),
                     ),
-                    child: Row(
-                      children: const [
-                        Text('Hey!!')
-                      ],
-                    ),)
+                  )
                 ],),
               ],
         ),
@@ -114,25 +132,25 @@ class _MusicListState extends State<MusicList> {
   }
 }
 
-class Transition extends PageRouteBuilder {
-  final Widget page;
-  Transition(this.page)
-      : super(
-            pageBuilder: (context, animation, otherAnimation) => page,
-            transitionDuration: const Duration(seconds: 1),
-            reverseTransitionDuration: const Duration(milliseconds: 200),
-            transitionsBuilder: (context, animation, otherAnimation, child) {
-              animation = CurvedAnimation(
-                  parent: animation,
-                  curve: Curves.fastLinearToSlowEaseIn,
-                  reverseCurve: Curves.fastOutSlowIn);
-              return Align(
-                alignment: Alignment.bottomCenter,
-                child: SizeTransition(
-                  sizeFactor: animation,
-                  axisAlignment: 0,
-                  child: page,
-                ),
-              );
-            });
-}
+// class Transition extends PageRouteBuilder {
+//   final Widget page;
+//   Transition(this.page)
+//       : super(
+//             pageBuilder: (context, animation, otherAnimation) => page,
+//             transitionDuration: const Duration(seconds: 1),
+//             reverseTransitionDuration: const Duration(milliseconds: 200),
+//             transitionsBuilder: (context, animation, otherAnimation, child) {
+//               animation = CurvedAnimation(
+//                   parent: animation,
+//                   curve: Curves.fastLinearToSlowEaseIn,
+//                   reverseCurve: Curves.fastOutSlowIn);
+//               return Align(
+//                 alignment: Alignment.bottomCenter,
+//                 child: SizeTransition(
+//                   sizeFactor: animation,
+//                   axisAlignment: 0,
+//                   child: page,
+//                 ),
+//               );
+//             });
+// }
