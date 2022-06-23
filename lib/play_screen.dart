@@ -46,7 +46,7 @@ class _PlayScreenState extends State<PlayScreen> {
                 height: 200.0,
                 width: 200.0,
                 decoration: const BoxDecoration(
-                  color: Color.fromARGB(100, 158, 158, 158),
+                  color: Color.fromARGB(170, 160, 160, 160),
                   borderRadius: BorderRadius.all(Radius.circular(10.0))),
               ),
             ),
@@ -56,12 +56,14 @@ class _PlayScreenState extends State<PlayScreen> {
             child: Column(
                 children: [
                   Text(widget.title,
+                  overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       fontSize: 24.0,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                       )),
                   Text(widget.author,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold, 
                       fontSize: 16,

@@ -15,6 +15,7 @@ class _MusicListState extends State<MusicList> {
     const backColor = Colors.white;
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    double size = ((width + height) / 2) * 0.075;
     return Scaffold(
       backgroundColor: mainColor,
       appBar: PreferredSize(
@@ -50,8 +51,8 @@ class _MusicListState extends State<MusicList> {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20.0), color: backColor),
         child: Stack(
-          children: 
-                [ListView.builder(
+          children: [
+            ListView.builder(
                 itemCount: 20,
                 itemBuilder: (BuildContext context, int index) {
                   String songTitle;
@@ -68,13 +69,13 @@ class _MusicListState extends State<MusicList> {
                       onPressed: () {
                         songAuthor = "Author ${index + 1}";
                         songTitle = "Music ${index + 1}";
-        
+
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => PlayScreen(
-                              title: songTitle,
-                              author: songAuthor,
-                            )),
+                              builder: (context) => PlayScreen(
+                                    title: songTitle,
+                                    author: songAuthor,
+                                  )),
                         );
                       },
                       child: ListTile(
@@ -88,44 +89,77 @@ class _MusicListState extends State<MusicList> {
                         ),
                         subtitle: Text(
                           "Author ${index + 1}",
-                          style: const TextStyle(fontSize: 14.0, color: mainColor),
+                          style:
+                              const TextStyle(fontSize: 14.0, color: mainColor),
                           textDirection: TextDirection.ltr,
                         ),
                       ),
                     ),
                   );
                 }),
-
-                Stack(
-                  alignment: AlignmentDirectional.centerStart,
-                  children: [
-                  Padding(
-                    padding: EdgeInsets.only(bottom: (height * 0.08)),
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          elevation: 10.0,
-                          primary: mainColor,
-                          minimumSize: Size((width * 0.8), 80),
-                          maximumSize: Size((width * 0.8), 100),
-                          shape: const StadiumBorder()
-                        ),
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            color: Colors.deepOrange
+            Stack(
+              alignment: AlignmentDirectional.centerStart,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(bottom: (height * 0.08)),
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: ElevatedButton(
+                      onPressed: () => null,
+                      style: ElevatedButton.styleFrom(
+                        elevation: 10.0,
+                        primary: mainColor,
+                        minimumSize: Size((width * 0.8), 80),
+                        maximumSize: Size((width), 100),
+                        shape: const StadiumBorder(),
+                        shadowColor: mainColor,
+                      ),
+                      child: Row(
+                        children: [
+                          const CircleAvatar(
+                            radius: 20.0,
+                            backgroundColor: backColor,
                           ),
-                          child: Row(
+                          const SizedBox(
+                            width: 8.0,
+                          ),
+                          Expanded(child: ListView(
                             children: [
-                              Text('Hight: $height\nWidth: $width')
+                              Text(
+                                'Hight: $height',
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, letterSpacing: 2.0),
+                              ),
+                              Text('Width: $width dddd dddddddddddddddefgh', 
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: const TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold, letterSpacing: 1.0,
+                                color: Color.fromARGB(255, 40, 40, 40)),)
                             ],
                           ),
-                        ),),
+                          ),
+                          IconButton(
+                              onPressed: () {},
+                              icon: const Icon(Icons.skip_previous),iconSize: size),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(Icons.play_arrow),
+                            iconSize: size,
+                          ),
+                          IconButton(
+                              onPressed: () {},
+                              icon: const Icon(Icons.skip_next),iconSize: size),
+                        ],
+                      ),
                     ),
-                  )
-                ],),
+                  ),
+                )
               ],
+            ),
+          ],
         ),
       ),
     );

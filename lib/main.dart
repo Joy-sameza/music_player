@@ -14,6 +14,8 @@ class MyApp extends StatelessWidget {
       title: 'Music Player',
       theme: ThemeData(
         primarySwatch: Colors.grey,
+        fontFamily: 'Ubuntu',
+        // brightness: Brightness.dark
       ),
       debugShowCheckedModeBanner: false,
       home: const MusicList(),
