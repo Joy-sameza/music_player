@@ -188,26 +188,3 @@ class _MusicListState extends State<MusicList> {
     );
   }
 }
-
-// class Transition extends PageRouteBuilder {
-//   final Widget page;
-//   Transition(this.page)
-//       : super(
-//             pageBuilder: (context, animation, otherAnimation) => page,
-//             transitionDuration: const Duration(seconds: 1),
-//             reverseTransitionDuration: const Duration(milliseconds: 200),
-//             transitionsBuilder: (context, animation, otherAnimation, child) {
-//               animation = CurvedAnimation(
-//                   parent: animation,
-//                   curve: Curves.fastLinearToSlowEaseIn,
-//                   reverseCurve: Curves.fastOutSlowIn);
-//               return Align(
-//                 alignment: Alignment.bottomCenter,
-//                 child: SizeTransition(
-//                   sizeFactor: animation,
-//                   axisAlignment: 0,
-//                   child: page,
-//                 ),
-//               );
-//             });
-// }
